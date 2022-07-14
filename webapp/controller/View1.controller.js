@@ -30,10 +30,12 @@ sap.ui.define([
 			},
 
 			getBooks: function() {
+				this.getView().setBusy(true);
 				//this.jsonFill(this.mockBooks);
 
 				Client.get().then(
 					(result)=>{
+						this.getView().setBusy(false);
 						this.jsonFill(result);
 					}
 				);
@@ -60,6 +62,7 @@ sap.ui.define([
 					});
 				}
 
+				this.getView().setBusy(true);
 				Client.post(oBook).then(_resolve.bind(this));	
 			},
 
@@ -79,6 +82,7 @@ sap.ui.define([
 					let row = selItems[i];
 					let sBasePath = row.getBindingContextPath();
 					let base = oModel.getProperty(sBasePath);
+					this.getView().setBusy(true);
 					Client.delete(base.isbn).then(_resolve.bind(this));
 				}		
 
