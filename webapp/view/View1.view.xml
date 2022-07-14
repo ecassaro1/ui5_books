@@ -3,13 +3,105 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
 >
 	<Shell id="shell">
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
 					<content>
-						<Text text="Hello from UI5"/>
+						<VBox fitContainer="true" id="vbox">
+
+                            <f:SimpleForm
+                                id="inputForm"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                            >
+                                <f:content> 
+                                    <Label text="ISBN" labelFor="isbn"/>
+                                    <Input
+                                        id="isbn"
+                                        value="{objectVM>/isbn}"/>
+
+                                    <Label text="Title" labelFor="title"/>
+                                    <Input
+                                        id="title"
+                                        value="{objectVM>/title}"/>
+
+                                    <Label text="Author" labelFor="author"/>
+                                    <Input
+                                        id="author"
+                                        value="{objectVM>/author}"/>
+                                </f:content> 
+                            </f:SimpleForm>    							
+
+							<Table
+								id="baseTable"
+								items="{path: 'local>/booksList'}"
+								mode="SingleSelect"
+								sticky="ColumnHeaders,HeaderToolbar"
+								inset="false"
+								autoPopinMode="true"
+								fixedLayout="false"
+								growing="true"
+								growingScrollToLoad="true"
+								growingThreshold="20"
+							>
+
+								<headerToolbar>
+									<OverflowToolbar>
+										<Title text="Books" level="H2"/>
+
+										<ToolbarSpacer></ToolbarSpacer>
+										<Button
+											id="refreshBtn"
+											text="Refresh"
+											press="onRefresh"
+										/>			
+										<Button
+											id="insertBtn"
+											text="Insert"
+											press="onInsert"
+										/>			
+										<Button 
+											id="removeBtn"
+											text="Remove" 
+											press="onRemove"
+										/>
+									</OverflowToolbar>
+								</headerToolbar>
+
+
+								<columns>
+									<Column
+										importance="High"
+									>
+										<Text text="ISBN" />
+									</Column>         
+
+									<Column
+										importance="Medium"
+									>
+										<Text text="Title" />
+									</Column>         						
+
+									<Column
+										importance="Medium"
+									>
+										<Text text="Author" />
+									</Column>         				     				
+								</columns>					
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text text="{local>isbn}"/>
+											<Text text="{local>title}"/>
+											<Text text="{local>author}"/>
+										</cells>
+									</ColumnListItem>
+								</items>			
+							</Table>		
+						</VBox>
 					</content>
 				</Page>
 			</pages>
